@@ -268,6 +268,11 @@ public class ItemConfigParser {
             item = ItemConfigParserV111.addShulkerBoxInfoToItem(item, section);
         }
 
+        if ( isCB112orLater() ) {
+            // ナレッジブックの詳細設定
+            item = ItemConfigParserV112.addKnowledgeBookInfoToItem(item, section);
+        }
+
         return item;
     }
 
@@ -415,6 +420,11 @@ public class ItemConfigParser {
             // シャルカーボックスの詳細設定
             ItemConfigParserV111.addShulkerBoxInfoToSection(item, section);
         }
+
+        if ( isCB112orLater() ) {
+            // ナレッジブックの詳細設定
+            ItemConfigParserV112.addKnowledgeBookInfoToSection(item, section);
+        }
     }
 
     /**
@@ -490,6 +500,14 @@ public class ItemConfigParser {
      */
     private static boolean isCB111orLater() {
         return isUpperVersion(Bukkit.getBukkitVersion(), "1.11");
+    }
+
+    /**
+     * 現在動作中のCraftBukkitが、v1.12 以上かどうかを確認する
+     * @return v1.12以上ならtrue、そうでないならfalse
+     */
+    private static boolean isCB112orLater() {
+        return isUpperVersion(Bukkit.getBukkitVersion(), "1.12");
     }
 
     /**

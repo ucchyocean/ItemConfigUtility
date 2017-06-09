@@ -33,6 +33,7 @@ public class ItemConfigParserV18 {
      * @param item
      * @return 変更後のItemStack
      */
+    @SuppressWarnings("deprecation")
     protected static ItemStack addBannerInfoToItem(
             ConfigurationSection section, ItemStack item) {
 
@@ -83,6 +84,7 @@ public class ItemConfigParserV18 {
      * @param section
      * @param item
      */
+    @SuppressWarnings("deprecation")
     protected static ConfigurationSection addBannerInfoToSection(
             ConfigurationSection section, ItemStack item) {
 
