@@ -5,9 +5,6 @@
  */
 package com.github.ucchyocean.itemconfig;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
@@ -62,14 +59,11 @@ public class ItemConfigParserV112 {
         KnowledgeBookMeta meta = (KnowledgeBookMeta)item.getItemMeta();
 
 
-        List<NamespacedKey> recipes = new ArrayList<NamespacedKey>();
-
         for ( String key : recipesSection.getKeys(false) ) {
             String recipe = recipesSection.getString(key);
-            recipes.add(NamespacedKey.minecraft(recipe));
+            meta.addRecipe(NamespacedKey.minecraft(recipe));
         }
 
-        meta.setRecipes(recipes);
         item.setItemMeta(meta);
 
         return item;
