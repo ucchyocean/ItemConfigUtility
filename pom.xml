@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.ucchyocean</groupId>
   <artifactId>ItemConfigUtility</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
   <description>Item Serialize/Desirialize Utility for Bukkit Plugin.</description>
 
   <licenses>
@@ -81,7 +81,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.12-R0.1-SNAPSHOT</version>
+      <version>1.14.2-R0.1-SNAPSHOT</version>
       <optional>true</optional>
     </dependency>
   </dependencies>

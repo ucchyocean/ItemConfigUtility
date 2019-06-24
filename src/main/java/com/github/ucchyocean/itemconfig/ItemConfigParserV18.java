@@ -37,7 +37,7 @@ public class ItemConfigParserV18 {
     protected static ItemStack addBannerInfoToItem(
             ConfigurationSection section, ItemStack item) {
 
-        if ( item.getType() != Material.BANNER ) {
+        if ( !isBanner(item.getType()) ) {
             return item;
         }
 
@@ -88,7 +88,7 @@ public class ItemConfigParserV18 {
     protected static ConfigurationSection addBannerInfoToSection(
             ConfigurationSection section, ItemStack item) {
 
-        if ( item.getType() != Material.BANNER ) {
+        if ( !isBanner(item.getType()) ) {
             return section;
         }
 
@@ -196,5 +196,9 @@ public class ItemConfigParserV18 {
             }
         }
         return null;
+    }
+
+    private static boolean isBanner(Material m) {
+        return m.name().equals("BANNER") || m.name().endsWith("_BANNER");
     }
 }

@@ -152,8 +152,7 @@ public class ItemConfigParser {
         }
 
         // スカルの詳細設定
-        if ( item.getType() == Material.SKULL_ITEM &&
-                section.contains("owner") ) {
+        if ( isPlayerHead(item.getType()) && section.contains("owner") ) {
 
             SkullMeta sm = (SkullMeta)item.getItemMeta();
             if ( sm.setOwner(section.getString("owner")) ) {
@@ -162,8 +161,7 @@ public class ItemConfigParser {
         }
 
         // 本の詳細設定
-        if ( item.getType() == Material.WRITTEN_BOOK ||
-                item.getType() == Material.BOOK_AND_QUILL ) {
+        if ( isWrittenBook(item.getType()) ) {
 
             BookMeta bm = (BookMeta)item.getItemMeta();
             boolean needToSet = false;
@@ -192,7 +190,7 @@ public class ItemConfigParser {
         }
 
         // 花火の詳細設定
-        if ( item.getType() == Material.FIREWORK ) {
+        if ( isFireworkRocket(item.getType()) ) {
 
             FireworkMeta meta = (FireworkMeta)item.getItemMeta();
             meta.setPower(section.getInt("power", 1));
@@ -336,7 +334,7 @@ public class ItemConfigParser {
             section.set("green", lam.getColor().getGreen());
         }
 
-        if ( item.getType() == Material.SKULL_ITEM ) {
+        if ( isPlayerHead(item.getType()) ) {
 
             SkullMeta sm = (SkullMeta)item.getItemMeta();
             if ( sm.hasOwner() ) {
@@ -344,8 +342,7 @@ public class ItemConfigParser {
             }
         }
 
-        if ( item.getType() == Material.WRITTEN_BOOK ||
-                item.getType() == Material.BOOK_AND_QUILL ) {
+        if ( isWrittenBook(item.getType()) ) {
 
             BookMeta bm = (BookMeta)item.getItemMeta();
             if ( bm.hasAuthor() ) {
@@ -365,7 +362,7 @@ public class ItemConfigParser {
             ItemConfigParserLegacyPotion.addPotionInfoToSection(item, section);
         }
 
-        if ( item.getType() == Material.FIREWORK ) {
+        if ( isFireworkRocket(item.getType()) ) {
 
             FireworkMeta meta = (FireworkMeta)item.getItemMeta();
             section.set("power", meta.getPower());
@@ -555,5 +552,18 @@ public class ItemConfigParser {
         } else {
             return false;
         }
+    }
+
+    private static boolean isPlayerHead(Material m) {
+        return m.name().equals("SKULL_ITEM") || m.name().endsWith("PLAYER_HEAD");
+    }
+
+    private static boolean isWrittenBook(Material m) {
+        return m.name().equals("WRITTEN_BOOK") || m.name().endsWith("BOOK_AND_QUILL")
+                || m.name().equals("WRITABLE_BOOK");
+    }
+
+    private static boolean isFireworkRocket(Material m) {
+        return m.name().equals("FIREWORK") || m.name().endsWith("FIREWORK_ROCKET");
     }
 }
