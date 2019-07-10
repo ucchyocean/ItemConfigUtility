@@ -21,7 +21,7 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 public class ItemConfigParserV111 {
 
     /**
-     * 指定されたアイテムがシャルカーボックスだったときに、メタ情報をセクションに保存する。
+     * 指定されたアイテムがシュルカーボックスだったときに、メタ情報をセクションに保存する。
      * @param item
      * @param section
      */
@@ -47,7 +47,7 @@ public class ItemConfigParserV111 {
     }
 
     /**
-     * シャルカーボックスのメタデータを含める必要がある場合に、メタ情報を復帰して含めておく。
+     * シュルカーボックスのメタデータを含める必要がある場合に、メタ情報を復帰して含めておく。
      * @param item
      * @param section
      * @throws ItemConfigParseException
@@ -95,9 +95,9 @@ public class ItemConfigParserV111 {
     }
 
     /**
-     * シャルカーボックスの中に、指定された種類のアイテムが存在するかどうかをチェックする
+     * シュルカーボックスの中に、指定された種類のアイテムが存在するかどうかをチェックする
      * @param materials アイテムの種類リスト
-     * @param item シャルカーボックス
+     * @param item シュルカーボックス
      * @return 指定された種類のアイテムが含まれているかどうか
      */
     public static boolean containsMaterialsInShulkerBox(List<Material> materials, ItemStack item) {
@@ -123,9 +123,37 @@ public class ItemConfigParserV111 {
     }
 
     /**
-     * 指定されたアイテムがシャルカーボックスかどうかを判定する
+     * シュルカーボックスの中に、指定された種類のアイテムが存在するかどうかをチェックする
+     * @param materials アイテムの種類リスト(Material名のリスト)
+     * @param item シュルカーボックス
+     * @return 指定された種類のアイテムが含まれているかどうか
+     */
+    public static boolean containsMaterialStringInShulkerBox(List<String> materials, ItemStack item) {
+
+        if ( item == null || !isShulkerBox(item) ) return false;
+
+        if ( !item.hasItemMeta() || !(item.getItemMeta() instanceof BlockStateMeta) ) return false;
+        BlockStateMeta meta = (BlockStateMeta)item.getItemMeta();
+
+        if ( !meta.hasBlockState() || !(meta.getBlockState() instanceof ShulkerBox) ) return false;
+        ShulkerBox box = (ShulkerBox)meta.getBlockState();
+
+        Inventory inv = box.getInventory();
+        for ( ItemStack content : inv.getContents() ) {
+            if ( content != null ) {
+                for ( String mat : materials ) {
+                    if ( content.getType().toString().equals(mat) ) return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 指定されたアイテムがシュルカーボックスかどうかを判定する
      * @param item アイテム
-     * @return シャルカーボックスかどうか
+     * @return シュルカーボックスかどうか
      */
     public static boolean isShulkerBox(ItemStack item) {
         if ( item == null ) return false;
