@@ -158,6 +158,6 @@ public class ItemConfigParserV111 {
     public static boolean isShulkerBox(ItemStack item) {
         if ( item == null ) return false;
         Material type = item.getType();
-        return type.name().endsWith("_SHULKER_BOX");
+        return type.name().endsWith("SHULKER_BOX");
     }
 }

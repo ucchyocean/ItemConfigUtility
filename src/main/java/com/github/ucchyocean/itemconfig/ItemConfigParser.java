@@ -43,6 +43,15 @@ public class ItemConfigParser {
             return null;
         }
 
+        // item_config_type = bukkit が設定されている場合は、BukkitのAPIでデシリアライズする
+        if ( "bukkit".equals(section.getString("item_config_type")) ) {
+            if ( !section.contains("item") ) {
+                throw new ItemConfigParseException("Item Section was not found.");
+            }
+            return section.getItemStack("item");
+        }
+
+
         ItemStack item = null;
 
         if ( !section.contains("material") ) {
@@ -285,6 +294,13 @@ public class ItemConfigParser {
             return;
         }
 
+        // 1.13以降のバージョンの場合は、BukkitのAPIを使ってItemStackをシリアライズする。
+        if ( isCB113orLater() ) {
+            section.set("item_config_type", "bukkit");
+            section.set("item", item.clone());
+            return;
+        }
+
         section.set("material", item.getType().toString());
         if ( item.getAmount() > 1 ) {
             section.set("amount", item.getAmount());
@@ -505,6 +521,14 @@ public class ItemConfigParser {
      */
     private static boolean isCB112orLater() {
         return isUpperVersion(Bukkit.getBukkitVersion(), "1.12");
+    }
+
+    /**
+     * 現在動作中のCraftBukkitが、v1.13 以上かどうかを確認する
+     * @return v1.13以上ならtrue、そうでないならfalse
+     */
+    private static boolean isCB113orLater() {
+        return isUpperVersion(Bukkit.getBukkitVersion(), "1.13");
     }
 
     /**
